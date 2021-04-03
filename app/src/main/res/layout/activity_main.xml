@@ -104,6 +104,7 @@
 
 
         <Button
+            android:onClick="@{viewModel::onLoginClick}"
             android:id="@+id/login_btn"
             android:layout_width="@dimen/_250dp"
             android:layout_height="@dimen/_40dp"

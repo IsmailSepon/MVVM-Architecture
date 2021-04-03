@@ -16,7 +16,7 @@ import com.sepon.mvvmarchitecture.ui.auth.AuthViewmodel
         val bindig : ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         val viewmodel = ViewModelProviders.of(this).get(AuthViewmodel::class.java)
         bindig.viewModel = viewmodel
-
+        viewmodel.authInterface = this
 
 
     }
