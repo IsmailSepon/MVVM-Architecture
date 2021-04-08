@@ -3,6 +3,8 @@
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.sepon.mvvmarchitecture.R
 import com.sepon.mvvmarchitecture.databinding.ActivityMainBinding
@@ -26,9 +28,13 @@ import com.sepon.mvvmarchitecture.ui.auth.AuthViewmodel
          toast("login start")
      }
 
-     override fun onSucsess() {
+     override fun onSucsess(loginresponse: LiveData<String>) {
 
-         toast("login Success")
+         loginresponse.observe(this, Observer {
+
+             toast(it)
+
+         })
      }
 
      override fun onFailur(msg: String) {

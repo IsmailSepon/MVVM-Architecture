@@ -2,6 +2,7 @@ package com.sepon.mvvmarchitecture.ui.auth
 
 import android.view.View
 import androidx.lifecycle.ViewModel
+import com.sepon.mvvmarchitecture.repository.UserRepository
 
 class AuthViewmodel : ViewModel() {
 
@@ -23,8 +24,9 @@ class AuthViewmodel : ViewModel() {
             return
         }
 
+        val loginresponse = UserRepository().userLogin(email!! , password!!)
 
-        authInterface?.onSucsess()
+        authInterface?.onSucsess(loginresponse)
 
     }
 
