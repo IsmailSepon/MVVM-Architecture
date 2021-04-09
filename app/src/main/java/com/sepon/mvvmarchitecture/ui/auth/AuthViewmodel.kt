@@ -26,13 +26,20 @@ class AuthViewmodel : ViewModel() {
 
         Corotines.main {
 
-            val response = UserRepository().userLogin(email!!, password!!)
-            if (response.isSuccessful){
 
-                authInterface?.onSucsess(response.body()?.user!!)
-            }else{
-                authInterface?.onFailur("Error Code ${response.body()}")
+            try {
+
+                val authresponse = UserRepository().userLogin(email!!, password!!)
+                authresponse.user?.let {
+                    authInterface?.onSucsess(it)
+
+                    return@main
+                }
+                authInterface?.onFailur(authresponse.message)
+            }catch (e : Exception){
+                authInterface?.onFailur(e.message!!)
             }
+
         }
 
 
