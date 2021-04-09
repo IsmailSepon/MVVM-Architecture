@@ -3,6 +3,7 @@ package com.sepon.mvvmarchitecture.ui.auth
 import android.view.View
 import androidx.lifecycle.ViewModel
 import com.sepon.mvvmarchitecture.repository.UserRepository
+import com.sepon.mvvmarchitecture.utlitis.Corotines
 
 class AuthViewmodel : ViewModel() {
 
@@ -20,13 +21,20 @@ class AuthViewmodel : ViewModel() {
         if (email.isNullOrEmpty() || password.isNullOrEmpty()){
 
             authInterface?.onFailur("Invlaid input")
-
             return
         }
 
-        val loginresponse = UserRepository().userLogin(email!! , password!!)
+        Corotines.main {
 
-        authInterface?.onSucsess(loginresponse)
+            val response = UserRepository().userLogin(email!!, password!!)
+            if (response.isSuccessful){
+
+                authInterface?.onSucsess(response.body()?.user!!)
+            }else{
+                authInterface?.onFailur("Error Code ${response.body()}")
+            }
+        }
+
 
     }
 

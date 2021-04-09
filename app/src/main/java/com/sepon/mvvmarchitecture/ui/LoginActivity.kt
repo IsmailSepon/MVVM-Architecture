@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.sepon.mvvmarchitecture.R
+import com.sepon.mvvmarchitecture.data.entity.User
 import com.sepon.mvvmarchitecture.databinding.ActivityMainBinding
 import com.sepon.mvvmarchitecture.ui.auth.AuthInterface
 import com.sepon.mvvmarchitecture.ui.auth.AuthViewmodel
@@ -28,13 +29,9 @@ import com.sepon.mvvmarchitecture.ui.auth.AuthViewmodel
          toast("login start")
      }
 
-     override fun onSucsess(loginresponse: LiveData<String>) {
+     override fun onSucsess(user : User) {
 
-         loginresponse.observe(this, Observer {
-
-             toast(it)
-
-         })
+        toast("${user.username} is logged IN ")
      }
 
      override fun onFailur(msg: String) {
