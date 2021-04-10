@@ -1,4 +1,4 @@
- package com.sepon.mvvmarchitecture.ui.auth
+ package com.sepon.mvvmarchitecture.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

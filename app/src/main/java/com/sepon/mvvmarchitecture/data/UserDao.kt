@@ -13,7 +13,7 @@ import com.sepon.mvvmarchitecture.data.entity.User
 interface UserDao{
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUser(user : User) : Long
+    suspend fun insertUser(user : User) : Long
 
 
     @Query("SELECT * FROM user WHERE uid = $CURRENT_USER_ID")

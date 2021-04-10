@@ -20,6 +20,25 @@ interface APIServices {
     ) : Response<AuthResponse>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     companion object{
         open operator fun invoke() : APIServices {
             return Retrofit.Builder()

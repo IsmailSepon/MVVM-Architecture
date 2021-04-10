@@ -7,21 +7,43 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.sepon.mvvmarchitecture.R
+import com.sepon.mvvmarchitecture.data.AppDatabase
 import com.sepon.mvvmarchitecture.data.entity.User
 import com.sepon.mvvmarchitecture.databinding.ActivityMainBinding
+import com.sepon.mvvmarchitecture.network.APIServices
+import com.sepon.mvvmarchitecture.repository.UserRepository
 import com.sepon.mvvmarchitecture.ui.auth.AuthInterface
+import com.sepon.mvvmarchitecture.ui.auth.AuthViewModelFactory
 import com.sepon.mvvmarchitecture.ui.auth.AuthViewmodel
 
  class LoginActivity : AppCompatActivity() , AuthInterface{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+        val api = APIServices()
+        val db = AppDatabase(this)
+        val repository = UserRepository(api, db)
+        val factory = AuthViewModelFactory(repository)
+
        // setContentView(R.layout.activity_main)
         val bindig : ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        val viewmodel = ViewModelProviders.of(this).get(AuthViewmodel::class.java)
+        val viewmodel = ViewModelProviders.of(this, factory).get(AuthViewmodel::class.java)
         bindig.viewModel = viewmodel
         viewmodel.authInterface = this
 
 
+        viewmodel.getLoggedUser().observe(this, Observer { user ->
+
+            if (user != null){
+                // user already logged in
+
+            }
+
+        })
+
+
+        AppDatabase(this)
     }
 
      override fun onstart() {
