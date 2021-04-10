@@ -4,6 +4,7 @@ import android.view.View
 import androidx.lifecycle.ViewModel
 import com.sepon.mvvmarchitecture.repository.UserRepository
 import com.sepon.mvvmarchitecture.utlitis.Corotines
+import com.sepon.mvvmarchitecture.utlitis.NoInternetException
 
 class AuthViewmodel(
     private val repository : UserRepository
@@ -37,6 +38,8 @@ class AuthViewmodel(
                 }
                 authInterface?.onFailur(authresponse.message)
             }catch (e : Exception){
+                authInterface?.onFailur(e.message!!)
+            }catch (e: NoInternetException){
                 authInterface?.onFailur(e.message!!)
             }
 

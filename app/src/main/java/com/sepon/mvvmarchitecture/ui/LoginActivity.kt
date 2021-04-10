@@ -1,5 +1,6 @@
  package com.sepon.mvvmarchitecture.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -11,6 +12,7 @@ import com.sepon.mvvmarchitecture.data.AppDatabase
 import com.sepon.mvvmarchitecture.data.entity.User
 import com.sepon.mvvmarchitecture.databinding.ActivityMainBinding
 import com.sepon.mvvmarchitecture.network.APIServices
+import com.sepon.mvvmarchitecture.network.NetConnectionIntercepter
 import com.sepon.mvvmarchitecture.repository.UserRepository
 import com.sepon.mvvmarchitecture.ui.auth.AuthInterface
 import com.sepon.mvvmarchitecture.ui.auth.AuthViewModelFactory
@@ -21,7 +23,8 @@ import com.sepon.mvvmarchitecture.ui.auth.AuthViewmodel
         super.onCreate(savedInstanceState)
 
 
-        val api = APIServices()
+        val netIntercepter = NetConnectionIntercepter(this)
+        val api = APIServices(netIntercepter)
         val db = AppDatabase(this)
         val repository = UserRepository(api, db)
         val factory = AuthViewModelFactory(repository)
@@ -34,16 +37,17 @@ import com.sepon.mvvmarchitecture.ui.auth.AuthViewmodel
 
 
         viewmodel.getLoggedUser().observe(this, Observer { user ->
-
             if (user != null){
                 // user already logged in
+                Intent(this, SignUpActivity::class.java).also {
+                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK    //flag need to open a new activity
+                    startActivity(it)
+                }
 
             }
 
         })
 
-
-        AppDatabase(this)
     }
 
      override fun onstart() {

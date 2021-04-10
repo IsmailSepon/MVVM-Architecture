@@ -1,6 +1,7 @@
 package com.sepon.mvvmarchitecture.network
 
 import com.sepon.mvvmarchitecture.network.response.AuthResponse
+import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -40,8 +41,19 @@ interface APIServices {
 
 
     companion object{
-        open operator fun invoke() : APIServices {
-            return Retrofit.Builder()
+        open operator fun invoke(
+            networkIntercepter : NetConnectionIntercepter
+        ) : APIServices {
+
+            val okHttpClient = OkHttpClient.Builder()
+                .addInterceptor(networkIntercepter)
+                .build()
+
+
+
+
+                return Retrofit.Builder()
+                    .client(okHttpClient)
                     .baseUrl("")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
