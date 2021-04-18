@@ -11,5 +11,11 @@ object Corotines{
             work()
         }
 
+    //for store localdatabase
+    fun io(work : suspend (()->Unit)) =
+        CoroutineScope(Dispatchers.IO).launch {
+            work()
+        }
+
 
 }

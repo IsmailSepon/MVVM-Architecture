@@ -12,6 +12,7 @@ import com.sepon.mvvmarchitecture.databinding.ActivityMainBinding
 import com.sepon.mvvmarchitecture.ui.auth.AuthInterface
 import com.sepon.mvvmarchitecture.ui.auth.AuthViewModelFactory
 import com.sepon.mvvmarchitecture.ui.auth.AuthViewmodel
+import com.sepon.mvvmarchitecture.ui.profile.ProfileActivity
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
 
@@ -60,6 +61,10 @@ import org.kodein.di.generic.instance
      }
 
      override fun onSucsess(user : User) {
+
+         Intent(this, ProfileActivity::class.java).also {
+             startActivity(it)
+         }
 
         toast("${user.username} is logged IN ")
      }
